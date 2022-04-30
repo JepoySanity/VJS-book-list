@@ -33,11 +33,18 @@ class UI {
       <td>${book.title}</td>
       <td>${book.author}</td>
       <td>${book.isbn}</td>
-      <td><a href="">delete</a></td>
+      <td><a href="" class="delete-book">delete</a></td>
     `;
 
     list.appendChild(row);
   }
+  //remove book
+  static deleteBook(el) {
+    if (el.classList.contains("delete-book")) {
+      el.parentElement.parentElement.remove();
+    }
+  }
+
   //clearfield function on submit
   static clearFields() {
     document.querySelector("#title").value = "";
@@ -58,4 +65,10 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
   UI.addBookToList(book);
   //clear form fields on submit
   UI.clearFields();
+});
+//remove book
+document.querySelector("#book-list").addEventListener("click", (e) => {
+  e.preventDefault();
+  //delete book function
+  UI.deleteBook(e.target);
 });
