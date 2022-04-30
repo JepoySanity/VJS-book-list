@@ -28,6 +28,7 @@ class UI {
   static addBookToList(book) {
     let list = document.querySelector("#book-list");
     let row = document.createElement("tr");
+    row.className = "book-row";
 
     row.innerHTML = `
       <td>${book.title}</td>
@@ -84,3 +85,17 @@ document.querySelector("#book-list").addEventListener("click", (e) => {
   //delete book function
   UI.deleteBook(e.target);
 });
+//on key up event listener
+document.querySelector("#filter").addEventListener("keyup", filterInput);
+
+function filterInput(e) {
+  const filterText = e.target.value.toLowerCase();
+  document.querySelectorAll(".book-row").forEach(function (book) {
+    const item = book.textContent;
+    if (item.toLowerCase().indexOf(filterText) != -1) {
+      book.style.display = "";
+    } else {
+      book.style.display = "none";
+    }
+  });
+}
