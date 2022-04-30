@@ -1,5 +1,5 @@
 //Book class: representsbook
-class Books {
+class Book {
   constructor(title, author, isbn) {
     this.title = title;
     this.author = author;
@@ -22,7 +22,6 @@ class UI {
       },
     ];
     let books = storedBooks;
-
     books.forEach((book) => UI.addBookToList(book));
   }
 
@@ -34,11 +33,21 @@ class UI {
       <td>${book.title}</td>
       <td>${book.author}</td>
       <td>${book.isbn}</td>
-      <td>Delete</td>
+      <td><a href="">delete</a></td>
     `;
 
     list.appendChild(row);
   }
 }
-
+// display books on load
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
+// store books
+document.querySelector("#book-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const title = document.querySelector("#title").value;
+  const author = document.querySelector("#author").value;
+  const isbn = document.querySelector("#isbn").value;
+
+  let book = new Book(title, author, isbn);
+  UI.addBookToList(book);
+});
