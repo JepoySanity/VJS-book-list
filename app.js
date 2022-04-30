@@ -90,11 +90,11 @@ document.querySelector("#filter").addEventListener("keyup", filterInput);
 function filterInput(e) {
   const filterText = e.target.value.toLowerCase();
   document.querySelectorAll("#book-list").forEach(function (book) {
-    const item = book.firstChild.textContent;
+    const item = book.childElement;
     if (item.toLowerCase().indexOf(filterText) != -1) {
-      console.log("show");
-    } else {
       console.log("hide");
+    } else {
+      console.log("show");
     }
   });
 }
