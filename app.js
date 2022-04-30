@@ -41,10 +41,10 @@ class UI {
   }
   //ui form validate
   static checkInput() {
-    const title = document.querySelector("#title");
-    const author = document.querySelector("#author");
-    const isbn = document.querySelector("#isbn");
-    if (title.length == null || author.length == null || isbn.length == null) {
+    const title = document.querySelector("#title").value;
+    const author = document.querySelector("#author").value;
+    const isbn = document.querySelector("#isbn").value;
+    if (title.length == "" || author.length == "" || isbn.length == "") {
       return true;
     }
   }
@@ -90,12 +90,12 @@ document.querySelector("#filter").addEventListener("keyup", filterInput);
 
 function filterInput(e) {
   const filterText = e.target.value.toLowerCase();
-  document.querySelectorAll(".book-row").forEach(function (book) {
-    const item = book.textContent;
+  document.querySelectorAll("#book-list").forEach(function (book) {
+    const item = book.firstChild.textContent;
     if (item.toLowerCase().indexOf(filterText) != -1) {
-      book.style.display = "";
+      console.log("show");
     } else {
-      book.style.display = "none";
+      console.log("hide");
     }
   });
 }
