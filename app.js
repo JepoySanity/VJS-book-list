@@ -28,7 +28,6 @@ class UI {
   static addBookToList(book) {
     let list = document.querySelector("#book-list");
     let row = document.createElement("tr");
-    row.className = "book-row";
 
     row.innerHTML = `
       <td>${book.title}</td>
