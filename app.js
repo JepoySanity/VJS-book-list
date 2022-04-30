@@ -84,17 +84,3 @@ document.querySelector("#book-list").addEventListener("click", (e) => {
   //delete book function
   UI.deleteBook(e.target);
 });
-//on key up event listener
-document.querySelector("#filter").addEventListener("keyup", filterInput);
-
-function filterInput(e) {
-  const filterText = e.target.value.toLowerCase();
-  document.querySelectorAll("#book-list").forEach(function (book) {
-    const item = book.childElement;
-    if (item.toLowerCase().indexOf(filterText) != -1) {
-      console.log("hide");
-    } else {
-      console.log("show");
-    }
-  });
-}
