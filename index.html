@@ -12,6 +12,51 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
   </head>
-  <body></body>
+  <body>
+    <div class="container mt-2">
+      <h1 class="display-4 text-center">
+        <i class="fas fa-book-open text-primary"></i>
+        My<span class="text-primary">Book</span>List
+      </h1>
+      <form id="book-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" />
+        </div>
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" class="form-control" id="author" />
+        </div>
+        <div class="form-group">
+          <label for="isbn">ISBN</label>
+          <input type="text" class="form-control" id="isbn" />
+        </div>
+        <br />
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            value="Add Book"
+          >
+            Add Book
+          </button>
+        </div>
+      </form>
+      <table class="table table-striped mt-5">
+        <thead>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th></th>
+        </thead>
+        <tbody id="book-list"></tbody>
+      </table>
+    </div>
+    <script src="app.js"></script>
+  </body>
 </html>
