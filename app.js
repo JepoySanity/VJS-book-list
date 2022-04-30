@@ -38,6 +38,15 @@ class UI {
 
     list.appendChild(row);
   }
+  //ui form validate
+  static checkInput() {
+    const title = document.querySelector("#title");
+    const author = document.querySelector("#author");
+    const isbn = document.querySelector("#isbn");
+    if (title.length == null || author.length == null || isbn.length == null) {
+      return true;
+    }
+  }
   //remove book
   static deleteBook(el) {
     if (el.classList.contains("delete-book")) {
@@ -62,9 +71,12 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
   const isbn = document.querySelector("#isbn").value;
   //instantiate book class
   let book = new Book(title, author, isbn);
-  UI.addBookToList(book);
-  //clear form fields on submit
-  UI.clearFields();
+  if (UI.checkInput() == true) {
+    alert("fill up the necessary fields");
+  } else {
+    UI.addBookToList(book);
+    UI.clearFields();
+  }
 });
 //remove book
 document.querySelector("#book-list").addEventListener("click", (e) => {
