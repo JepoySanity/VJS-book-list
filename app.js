@@ -24,7 +24,7 @@ class UI {
     let books = storedBooks;
     books.forEach((book) => UI.addBookToList(book));
   }
-
+  //append to new book to tbody
   static addBookToList(book) {
     let list = document.querySelector("#book-list");
     let row = document.createElement("tr");
@@ -38,6 +38,12 @@ class UI {
 
     list.appendChild(row);
   }
+  //clearfield function on submit
+  static clearFields() {
+    document.querySelector("#title").value = "";
+    document.querySelector("#author").value = "";
+    document.querySelector("#isbn").value = "";
+  }
 }
 // display books on load
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
@@ -47,7 +53,9 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
   const title = document.querySelector("#title").value;
   const author = document.querySelector("#author").value;
   const isbn = document.querySelector("#isbn").value;
-
+  //instantiate book class
   let book = new Book(title, author, isbn);
   UI.addBookToList(book);
+  //clear form fields on submit
+  UI.clearFields();
 });
