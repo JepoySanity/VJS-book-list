@@ -77,6 +77,15 @@ class crd {
     storedBooks.push(book);
     localStorage.setItem("books", JSON.stringify(storedBooks));
   }
+  static removeBook(isbn) {
+    let storedBooks = crd.getBooks();
+    storedBooks.forEach(function (book, index) {
+      if (book.isbn === isbn) {
+        storedBooks.splice(index, 1);
+      }
+    });
+    localStorage.setItem("books", JSON.stringify(storedBooks));
+  }
 }
 // display books on load
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
@@ -100,6 +109,7 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
   UI.deleteBook(e.target);
+  crd.removeBook(e.target.parentElement.previousElementSibling.textContent());
 });
 //filter keyup event
 document.querySelector("#filter").addEventListener("keyup", UI.filterBooks);
