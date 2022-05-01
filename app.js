@@ -47,6 +47,18 @@ class UI {
       return true;
     }
   }
+  //filter result
+  static filterBooks(e) {
+    const filterText = e.target.value.toLowerCase();
+    document.querySelectorAll(".book-row").forEach(function (book) {
+      const bookItem = book.textContent;
+      if (bookItem.toLowerCase().indexOf(filterText) != -1) {
+        book.style.display = "";
+      } else {
+        book.style.display = "none";
+      }
+    });
+  }
   //remove book
   static deleteBook(el) {
     if (el.classList.contains("delete-book")) {
@@ -82,16 +94,5 @@ document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
   UI.deleteBook(e.target);
 });
-//on key up event listener
-document.querySelector("#filter").addEventListener("keyup", filterInput);
-function filterInput(e) {
-  const filterText = e.target.value.toLowerCase();
-  document.querySelectorAll(".book-row").forEach(function (book) {
-    const item = book.textContent;
-    if (item.toLowerCase().indexOf(filterText) != -1) {
-      book.style.display = "";
-    } else {
-      book.style.display = "none";
-    }
-  });
-}
+//filter keyup event
+document.querySelector("#filter").addEventListener("keyup", UI.filterBooks);
