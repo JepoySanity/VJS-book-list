@@ -36,7 +36,6 @@ class UI {
       <td>${book.isbn}</td>
       <td><a href="" class="delete-book">delete</a></td>
     `;
-
     list.appendChild(row);
   }
   //ui form validate
@@ -83,7 +82,7 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
   const isbn = document.querySelector("#isbn").value;
   //instantiate book class
   let book = new Book(title, author, isbn);
-  if (UI.checkInput() == true) {
+  if (UI.checkInput()) {
     alert("fill up the necessary fields");
   } else {
     UI.addBookToList(book);
@@ -93,7 +92,6 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
 //remove book
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
-  //delete book function
   UI.deleteBook(e.target);
 });
 //filter keyup event
