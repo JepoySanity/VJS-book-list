@@ -9,19 +9,7 @@ class Book {
 //UI class: handdle ui task
 class UI {
   static displayBooks() {
-    let storedBooks = [
-      {
-        title: "First Book",
-        author: "John Doe",
-        isbn: "6123466",
-      },
-      {
-        title: "Second Book",
-        author: "John Doe",
-        isbn: "25551121",
-      },
-    ];
-    let books = storedBooks;
+    let books = crd.getBooks();
     books.forEach((book) => UI.addBookToList(book));
   }
   //append to new book to tbody
@@ -72,6 +60,24 @@ class UI {
     document.querySelector("#isbn").value = "";
   }
 }
+//crud class
+class crd {
+  static getBooks() {
+    let storedBooks = localStorage.getItem("books");
+    let books;
+    if (storedBooks === null) {
+      books = [];
+    } else {
+      books = JSON.parse(storedBooks);
+    }
+    return books;
+  }
+  static storeBook(book) {
+    let storedBooks = crd.getBooks();
+    storedBooks.push(book);
+    localStorage.setItem("books", JSON.stringify(storedBooks));
+  }
+}
 // display books on load
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
 // store books
@@ -86,6 +92,7 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
     alert("fill up the necessary fields");
   } else {
     UI.addBookToList(book);
+    crd.storeBook(book);
     UI.clearFields();
   }
 });
