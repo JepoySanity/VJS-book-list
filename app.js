@@ -28,6 +28,7 @@ class UI {
   static addBookToList(book) {
     let list = document.querySelector("#book-list");
     let row = document.createElement("tr");
+    row.className = "book-row";
 
     row.innerHTML = `
       <td>${book.title}</td>
@@ -47,13 +48,24 @@ class UI {
       return true;
     }
   }
+  //filter result
+  static filterBooks(e) {
+    const filterText = e.target.value.toLowerCase();
+    document.querySelectorAll(".book-row").forEach(function (book) {
+      const bookItem = book.textContent;
+      if (bookItem.toLowerCase().indexOf(filterText) != -1) {
+        book.style.display = "";
+      } else {
+        book.style.display = "none";
+      }
+    });
+  }
   //remove book
   static deleteBook(el) {
     if (el.classList.contains("delete-book")) {
       el.parentElement.parentElement.remove();
     }
   }
-
   //clearfield function on submit
   static clearFields() {
     document.querySelector("#title").value = "";
@@ -84,3 +96,5 @@ document.querySelector("#book-list").addEventListener("click", (e) => {
   //delete book function
   UI.deleteBook(e.target);
 });
+//filter keyup event
+document.querySelector("#filter").addEventListener("keyup", UI.filterBooks);
