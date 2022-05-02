@@ -1,2 +1,2 @@
-# VJS-book-list
-## simple book listing app using HTML, Bootstrap5 and Vanilla javascript using local storage
+# Book Listing app 📚🔖
+## simple book listing app using HTML, Bootstrap5 and Vanilla javascript with local storage 🏪👌
