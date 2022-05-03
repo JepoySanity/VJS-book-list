@@ -16,11 +16,15 @@ class UI {
       <td>${book.title}</td>
       <td>${book.author}</td>
       <td>${book.isbn}</td>
-      <td><a href="">delete</a></td>
+      <td><a href="" class="delete-book">delete</a></td>
     `;
     table.appendChild(row);
   }
-  removeBookToList() {}
+  removeBookToList(e) {
+    if (e.target.className === "delete-book") {
+      e.target.parentElement.parentElement.remove();
+    }
+  }
   //form reset
   formReset() {
     let titleInput = document.getElementById("title");
@@ -57,4 +61,10 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
   } else {
     alert("please fill up all the necessary fields");
   }
+});
+
+document.querySelector("#book-list").addEventListener("click", (e) => {
+  e.preventDefault();
+  ui = new UI();
+  ui.removeBookToList(e);
 });
