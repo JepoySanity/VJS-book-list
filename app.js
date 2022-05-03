@@ -42,6 +42,19 @@ class UI {
       return true;
     }
   }
+  showMessage(alertType, msg) {
+    let messageEl = document.getElementById("message");
+    let alertEl = document.createElement("div");
+    alertEl.className = `alert alert-${alertType}`;
+    alertEl.textContent = msg;
+
+    messageEl.appendChild(alertEl);
+  }
+  hideMessage(elSelector) {
+    setTimeout(function () {
+      document.querySelector(elSelector).remove();
+    }, 3000);
+  }
 }
 
 let ui = new UI();
@@ -66,4 +79,6 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
   ui.removeBookToList(e);
+  ui.showMessage("success", "book removed");
+  ui.hideMessage(".alert");
 });
