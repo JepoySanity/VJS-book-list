@@ -5,46 +5,35 @@ class Book {
     this.isbn = isbn;
   }
 }
-class UI {
-  //add book to table body
-  addBooktoList(book) {
-    const table = document.getElementById("book-list");
-    const row = document.createElement("tr");
-    row.className = "book-entry";
-
-    row.innerHTML = `
-      <td>${book.title}</td>
-      <td>${book.author}</td>
-      <td>${book.isbn}</td>
-      <td><a href="" class="delete-book">delete</a></td>
-    `;
-    table.appendChild(row);
-  }
-  removeBookToList(e) {
-    if (e.target.className === "delete-book") {
-      e.target.parentElement.parentElement.remove();
-    }
-  }
-  //form reset
-  formReset() {
-    let titleInput = document.getElementById("title");
-    let authorInput = document.getElementById("author");
-    let isbnInput = document.getElementById("isbn");
-
-    titleInput.value = "";
-    authorInput.value = "";
-    isbnInput.value = "";
-  }
-  validateInput(title, author, isbn) {
-    if (title == "" || author == "" || isbn == "") {
-      return false;
+class Store {
+  static getBooks() {
+    let books;
+    //check if localstorage is empty
+    if (localStorage.getItem("books") === null) {
+      books = [];
     } else {
-      return true;
+      books = JSON.parse(localStorage.getItem("books"));
     }
+    return books;
+  }
+  static storeBook(book) {
+    let books = this.getBooks();
+    books.push(book);
+    localStorage.setItem("books", JSON.stringify(books));
+  }
+  static displayBooks() {
+    const storedBooks = Store.getBooks();
+    storedBooks.forEach(function (book) {
+      const ui = new UI();
+      ui.addBooktoList(book);
+    });
   }
 }
-
+//create new instance of UI class (UIclass.js)
 let ui = new UI();
+let store = new Store();
+//list books on load
+document.addEventListener("DOMContentLoaded", Store.displayBooks());
 //event listener for form submit
 document.querySelector("#book-form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -56,14 +45,20 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
 
   if (validateInput === true) {
     let book = new Book(bookTitle, bookAuthor, bookIsbn);
+    Store.storeBook(book);
     ui.addBooktoList(book);
     ui.formReset();
+    ui.showMessage("success", "Book added");
+    ui.hideMessage(".alert");
   } else {
-    alert("please fill up all the necessary fields");
+    ui.showMessage("danger", "Please fill up the necessary fields");
+    ui.hideMessage(".alert");
   }
 });
 
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
   ui.removeBookToList(e);
+  ui.showMessage("success", "book removed");
+  ui.hideMessage(".alert");
 });
