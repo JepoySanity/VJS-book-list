@@ -1,4 +1,3 @@
-//Book class: representsbook
 class Book {
   constructor(title, author, isbn) {
     this.title = title;
@@ -6,17 +5,12 @@ class Book {
     this.isbn = isbn;
   }
 }
-//UI class: handdle ui task
 class UI {
-  static displayBooks() {
-    let books = crd.getBooks();
-    books.forEach((book) => UI.addBookToList(book));
-  }
-  //append to new book to tbody
-  static addBookToList(book) {
-    let list = document.querySelector("#book-list");
-    let row = document.createElement("tr");
-    row.className = "book-row";
+  //add book to table body
+  addBooktoList(book) {
+    const table = document.getElementById("book-list");
+    const row = document.createElement("tr");
+    row.className = "book-entry";
 
     row.innerHTML = `
       <td>${book.title}</td>
@@ -24,92 +18,52 @@ class UI {
       <td>${book.isbn}</td>
       <td><a href="" class="delete-book">delete</a></td>
     `;
-    list.appendChild(row);
+    table.appendChild(row);
   }
-  //ui form validate
-  static checkInput() {
-    const title = document.querySelector("#title").value;
-    const author = document.querySelector("#author").value;
-    const isbn = document.querySelector("#isbn").value;
-    if (title.length == "" || author.length == "" || isbn.length == "") {
+  removeBookToList(e) {
+    if (e.target.className === "delete-book") {
+      e.target.parentElement.parentElement.remove();
+    }
+  }
+  //form reset
+  formReset() {
+    let titleInput = document.getElementById("title");
+    let authorInput = document.getElementById("author");
+    let isbnInput = document.getElementById("isbn");
+
+    titleInput.value = "";
+    authorInput.value = "";
+    isbnInput.value = "";
+  }
+  validateInput(title, author, isbn) {
+    if (title == "" || author == "" || isbn == "") {
+      return false;
+    } else {
       return true;
     }
   }
-  //filter result
-  static filterBooks(e) {
-    const filterText = e.target.value.toLowerCase();
-    document.querySelectorAll(".book-row").forEach(function (book) {
-      const bookItem = book.textContent;
-      if (bookItem.toLowerCase().indexOf(filterText) != -1) {
-        book.style.display = "";
-      } else {
-        book.style.display = "none";
-      }
-    });
-  }
-  //remove book
-  static deleteBook(el) {
-    if (el.classList.contains("delete-book")) {
-      el.parentElement.parentElement.remove();
-    }
-  }
-  //clearfield function on submit
-  static clearFields() {
-    document.querySelector("#title").value = "";
-    document.querySelector("#author").value = "";
-    document.querySelector("#isbn").value = "";
-  }
 }
-//crud class
-class crd {
-  static getBooks() {
-    let storedBooks = localStorage.getItem("books");
-    let books;
-    if (storedBooks === null) {
-      books = [];
-    } else {
-      books = JSON.parse(storedBooks);
-    }
-    return books;
-  }
-  static storeBook(book) {
-    let storedBooks = crd.getBooks();
-    storedBooks.push(book);
-    localStorage.setItem("books", JSON.stringify(storedBooks));
-  }
-  static removeBook(isbn) {
-    let storedBooks = crd.getBooks();
-    storedBooks.forEach(function (book, index) {
-      if (book.isbn === isbn) {
-        storedBooks.splice(index, 1);
-      }
-    });
-    localStorage.setItem("books", JSON.stringify(storedBooks));
-  }
-}
-// display books on load
-document.addEventListener("DOMContentLoaded", UI.displayBooks);
-// store books
+
+let ui = new UI();
+//event listener for form submit
 document.querySelector("#book-form").addEventListener("submit", (e) => {
   e.preventDefault();
-  const title = document.querySelector("#title").value;
-  const author = document.querySelector("#author").value;
-  const isbn = document.querySelector("#isbn").value;
-  //instantiate book class
-  let book = new Book(title, author, isbn);
-  if (UI.checkInput()) {
-    alert("fill up the necessary fields");
+  let bookTitle = document.getElementById("title").value,
+    bookAuthor = document.getElementById("author").value,
+    bookIsbn = document.getElementById("isbn").value;
+
+  let validateInput = ui.validateInput(bookTitle, bookAuthor, bookIsbn);
+
+  if (validateInput === true) {
+    let book = new Book(bookTitle, bookAuthor, bookIsbn);
+    ui.addBooktoList(book);
+    ui.formReset();
   } else {
-    UI.addBookToList(book);
-    crd.storeBook(book);
-    UI.clearFields();
+    alert("please fill up all the necessary fields");
   }
 });
-//remove book
+
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
-  UI.deleteBook(e.target);
-  crd.removeBook(e.target.parentElement.previousElementSibling.textContent());
+  ui.removeBookToList(e);
 });
-//filter keyup event
-document.querySelector("#filter").addEventListener("keyup", UI.filterBooks);
