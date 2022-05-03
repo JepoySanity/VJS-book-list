@@ -21,4 +21,13 @@ class Store {
       ui.addBooktoList(book);
     });
   }
+  static deleteBook(isbn) {
+    const getBooks = Store.getBooks();
+    getBooks.forEach(function (book, index) {
+      if (book.isbn === isbn) {
+        getBooks.splice(index, 1);
+      }
+    });
+    localStorage.setItem("books", JSON.stringify(getBooks));
+  }
 }
