@@ -35,6 +35,7 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
   ui.removeBookToList(e);
+  Store.deleteBook(e.target.parentElement.previousElementSibling.textContent);
   ui.showMessage("success", "book removed");
   ui.hideMessage(".alert");
 });
