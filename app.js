@@ -5,11 +5,13 @@ class Book {
     this.isbn = isbn;
   }
 }
-
 class UI {
+  //add book to table body
   addBooktoList(book) {
     const table = document.getElementById("book-list");
     const row = document.createElement("tr");
+    row.className = "book-entry";
+
     row.innerHTML = `
       <td>${book.title}</td>
       <td>${book.author}</td>
@@ -17,6 +19,24 @@ class UI {
       <td><a href="">delete</a></td>
     `;
     table.appendChild(row);
+  }
+  removeBookToList() {}
+  //form reset
+  formReset() {
+    let titleInput = document.getElementById("title");
+    let authorInput = document.getElementById("author");
+    let isbnInput = document.getElementById("isbn");
+
+    titleInput.value = "";
+    authorInput.value = "";
+    isbnInput.value = "";
+  }
+  validateInput(title, author, isbn) {
+    if (title == "" || author == "" || isbn == "") {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
 
@@ -27,7 +47,14 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
     bookAuthor = document.getElementById("author").value,
     bookIsbn = document.getElementById("isbn").value;
 
-  let book = new Book(bookTitle, bookAuthor, bookIsbn);
   let ui = new UI();
-  ui.addBooktoList(book);
+  let validateInput = ui.validateInput(bookTitle, bookAuthor, bookIsbn);
+
+  if (validateInput === true) {
+    let book = new Book(bookTitle, bookAuthor, bookIsbn);
+    ui.addBooktoList(book);
+    ui.formReset();
+  } else {
+    alert("please fill up all the necessary fields");
+  }
 });
