@@ -28,6 +28,7 @@ class UI {
     authorInput.value = "";
     isbnInput.value = "";
   }
+  //form validator
   validateInput(title, author, isbn) {
     if (title == "" || author == "" || isbn == "") {
       return false;
@@ -35,6 +36,7 @@ class UI {
       return true;
     }
   }
+  //alert message
   showMessage(alertType, msg) {
     let messageEl = document.getElementById("message");
     let alertEl = document.createElement("div");
@@ -43,6 +45,7 @@ class UI {
 
     messageEl.appendChild(alertEl);
   }
+  //hide alert message
   hideMessage(elSelector) {
     setTimeout(function () {
       document.querySelector(elSelector).remove();
