@@ -44,6 +44,7 @@ class UI {
   }
 }
 
+let ui = new UI();
 //event listener for form submit
 document.querySelector("#book-form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -51,7 +52,6 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
     bookAuthor = document.getElementById("author").value,
     bookIsbn = document.getElementById("isbn").value;
 
-  let ui = new UI();
   let validateInput = ui.validateInput(bookTitle, bookAuthor, bookIsbn);
 
   if (validateInput === true) {
@@ -65,6 +65,5 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
 
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
-  ui = new UI();
   ui.removeBookToList(e);
 });
