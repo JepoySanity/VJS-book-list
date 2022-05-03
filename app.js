@@ -21,10 +21,19 @@ class Store {
     books.push(book);
     localStorage.setItem("books", JSON.stringify(books));
   }
+  static displayBooks() {
+    const storedBooks = Store.getBooks();
+    storedBooks.forEach(function (book) {
+      const ui = new UI();
+      ui.addBooktoList(book);
+    });
+  }
 }
 //create new instance of UI class (UIclass.js)
 let ui = new UI();
 let store = new Store();
+//list books on load
+document.addEventListener("DOMContentLoaded", Store.displayBooks());
 //event listener for form submit
 document.querySelector("#book-form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -37,7 +46,6 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
   if (validateInput === true) {
     let book = new Book(bookTitle, bookAuthor, bookIsbn);
     Store.storeBook(book);
-
     ui.addBooktoList(book);
     ui.formReset();
     ui.showMessage("success", "Book added");

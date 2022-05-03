@@ -4,7 +4,6 @@ class UI {
     const table = document.getElementById("book-list");
     const row = document.createElement("tr");
     row.className = "book-entry";
-
     row.innerHTML = `
       <td>${book.title}</td>
       <td>${book.author}</td>
