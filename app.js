@@ -31,11 +31,24 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
     ui.hideMessage(".alert");
   }
 });
-
+//delete book eventlistener
 document.querySelector("#book-list").addEventListener("click", (e) => {
   e.preventDefault();
   ui.removeBookToList(e);
   Store.deleteBook(e.target.parentElement.previousElementSibling.textContent);
   ui.showMessage("success", "book removed");
   ui.hideMessage(".alert");
+});
+//filter keyup eventlistener
+document.querySelector("#filter").addEventListener("keyup", (e) => {
+  const filterText = e.target.value.toLowerCase();
+  const bookList = document.querySelectorAll(".book-entry");
+
+  bookList.forEach(function (el) {
+    if (el.textContent.toLowerCase().indexOf(filterText) > -1) {
+      el.style.display = "";
+    } else {
+      el.style.display = "none";
+    }
+  });
 });
